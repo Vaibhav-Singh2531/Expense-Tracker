@@ -1,121 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { BrowserRouter, Route, Routes, Link, Navigate } from "react-router-dom";
+import SignInPage from "./pages/auth/SignIn";
+import SignUpPage from "./pages/auth/SignUp";
 
-function App() {
-  const [count, setCount] = useState(0)
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
 }
 
-export default App
+function DefaultLayout() {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <header className="p-4 border-b flex justify-between items-center bg-background">
+        <Link to="/" className="text-2xl font-bold gradient-title">cents</Link>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          <div className="flex gap-4">
+            <Link to="/sign-in" className="btn hover:bg-muted p-2 rounded">Sign In</Link>
+            <Link to="/sign-up" className="btn bg-primary text-primary-foreground p-2 rounded">Sign Up</Link>
+          </div>
+        </SignedOut>
+      </header>
+      <main className="flex-1 p-4">
+        <SignedIn>
+          <h1 className="text-xl">Welcome to your dashboard</h1>
+          {/* Dashboard components will be migrated here later */}
+        </SignedIn>
+        <SignedOut>
+          <div className="text-center py-20">
+            <h1 className="text-4xl font-extrabold mb-4">Take Control of Your Finances</h1>
+            <p className="text-muted-foreground">Please sign in to continue.</p>
+          </div>
+        </SignedOut>
+      </main>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<DefaultLayout />} />
+          <Route path="/sign-in/*" element={<SignInPage />} />
+          <Route path="/sign-up/*" element={<SignUpPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
+    </ClerkProvider>
+  );
+}
+
+export default App;
