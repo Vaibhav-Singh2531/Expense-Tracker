@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { ClerkExpressWithAuth, ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
 import aj from "./lib/arcjet.js";
 import { checkUser } from "./lib/checkUser.js";
+import accountRoutes from "./routes/account.route.js";
 
 dotenv.config();
 
@@ -50,6 +51,8 @@ app.post("/api/users/sync", ClerkExpressRequireAuth(), async (req, res) => {
   }
 });
 
+// Register API Routes
+app.use("/api/accounts", accountRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
