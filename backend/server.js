@@ -6,6 +6,7 @@ import aj from "./lib/arcjet.js";
 import { checkUser } from "./lib/checkUser.js";
 import accountRoutes from "./routes/account.route.js";
 import budgetRoutes from "./routes/budget.route.js";
+import transactionRoutes from "./routes/transaction.route.js";
 
 dotenv.config();
 
@@ -55,6 +56,8 @@ app.post("/api/users/sync", ClerkExpressRequireAuth(), async (req, res) => {
 // Register API Routes
 app.use("/api/accounts", accountRoutes);
 app.use("/api/budgets", budgetRoutes);
+app.use("/api/transactions", transactionRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
