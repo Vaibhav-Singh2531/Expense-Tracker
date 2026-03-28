@@ -8,6 +8,7 @@ import accountRoutes from "./routes/account.route.js";
 import budgetRoutes from "./routes/budget.route.js";
 import transactionRoutes from "./routes/transaction.route.js";
 import dashboardRoutes from "./routes/dashboard.route.js";
+import inngestRoutes from "./routes/inngest.route.js";
 
 dotenv.config();
 
@@ -59,6 +60,7 @@ app.use("/api/accounts", accountRoutes);
 app.use("/api/budgets", budgetRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/inngest", inngestRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
