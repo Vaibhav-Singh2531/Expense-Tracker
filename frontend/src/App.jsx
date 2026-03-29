@@ -6,6 +6,11 @@ import RootLayout from "./layouts/RootLayout.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/Home.jsx";
 
+// Migrated Pages
+import Dashboard from "./pages/dashboard/page.jsx";
+import AccountPage from "./pages/account/[id]/page.jsx";
+import AddTransactionPage from "./pages/transaction/create/page.jsx";
+
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
@@ -21,8 +26,9 @@ function App() {
             <Route path="/" element={<Home />} />
             
             <Route element={<MainLayout />}>
-              {/* Dashboard and related pages will be added in Part 2 */}
-              <Route path="/dashboard" element={<div className="text-xl font-bold">Dashboard Migrating in Part 2...</div>} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/account/:id" element={<AccountPage />} />
+              <Route path="/transaction/create" element={<AddTransactionPage />} />
             </Route>
 
             <Route path="/sign-in/*" element={<SignInPage />} />

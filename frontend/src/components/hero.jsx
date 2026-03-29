@@ -1,8 +1,7 @@
 "use client"
 
-import Link from "next/link"
-import { Button } from "./ui/button"
-import Image from "next/image"
+import { Link } from "react-router-dom";
+import { Button } from "./ui/button.jsx";
 import { useEffect, useRef } from "react"
 
 const HeroSection = () => {
@@ -40,12 +39,12 @@ const HeroSection = () => {
           analyze, and optimize your spending with real-time insights.
         </p>
         <div className="flex justify-center space-x-4">
-          <Link href="/dashboard">
+          <Link to="/dashboard">
             <Button size="lg" className="px-8">
               Get Started
             </Button>
           </Link>
-          <Link href="https://www.youtube.com/roadsidecoder">
+          <Link to="https://www.youtube.com/roadsidecoder">
             <Button size="lg" variant="outline" className="px-8">
               Watch Demo
             </Button>
@@ -53,13 +52,12 @@ const HeroSection = () => {
         </div>
         <div className="hero-image-wrapper mt-5 md:mt-0">
           <div ref={imageRef} className="hero-image">
-            <Image
+            <img
               src="/banner.jpeg"
               width={1280}
               height={720}
               alt="Dashboard Preview"
               className="rounded-lg shadow-2xl border mx-auto"
-              priority
             />
           </div>
         </div>
