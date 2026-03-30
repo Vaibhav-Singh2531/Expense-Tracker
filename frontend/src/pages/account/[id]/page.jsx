@@ -1,23 +1,29 @@
-import React, { Suspense, useState, useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { useParams, Navigate } from 'react-router-dom';
 import { BarLoader } from 'react-spinners';
 import AccountChart from '../_components/AccountChart.jsx';
 import { TransactionTable } from '../_components/transaction-table.jsx';
 import AccountHeader from '../_components/account-header.jsx';
+import { getAccountWithTransactions } from '@/actions/accounts.js';
+import useFetch from '@/hooks/use-fetch.jsx';
 
 const AccountPage = () => {
     const { id } = useParams();
     
-    // Mock placeholder state, to be replaced by actual fetching in Day 7
-    const [accountData, setAccountData] = useState({
-        id,
-        name: "Mock Account",
-        balance: 0,
-        transactions: []
-    });
+    const { data: accountData, loading, fn: fetchAccount, error } = useFetch(getAccountWithTransactions);
 
-    if (!accountData) {
-        return <Navigate to="/" replace />;
+    useEffect(() => {
+        if (id) {
+            fetchAccount(id);
+        }
+    }, [id]);
+
+    if (loading || !accountData) {
+        return <BarLoader className="mt-4" width={"100%"} color="#9333ea" />
+    }
+
+    if (error) {
+        return <Navigate to="/dashboard" replace />;
     }
 
     const { transactions, ...account } = accountData;
