@@ -21,3 +21,14 @@ export const getDashboardData = async (token) => {
         throw new Error(error.response?.data?.error || "Failed to fetch dashboard data");
     }
 }
+
+export const createAccount = async (token, formData) => {
+    try {
+        const { data } = await api.post('/accounts', formData, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return data;
+    } catch (error) {
+        throw new Error(error.response?.data?.error || "Failed to create account");
+    }
+}

@@ -1,7 +1,7 @@
 import HeroSection from "../components/hero.jsx";
 import { Button } from "../components/ui/button.jsx";
 import { Card, CardContent } from "../components/ui/card.jsx";
-import { featuresData, howItWorksData, statsData, testimonialsData } from "../data/landing.js";
+import { featuresData, howItWorksData, statsData, testimonialsData } from "../data/landing.jsx";
 import { Link } from "react-router-dom";
 
 export default function Home() {
