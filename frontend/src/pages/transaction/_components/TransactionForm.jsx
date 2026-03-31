@@ -1,6 +1,6 @@
 "use client"
 import { createTransaction, updateTransaction } from '@/actions/transaction'
-import { transactionSchema } from '@/app/lib/schema'
+import { transactionSchema } from '@/lib/schema'
 import CreateAccountDrawer from '@/components/create-account-drawer'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
