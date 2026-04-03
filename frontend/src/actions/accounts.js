@@ -13,7 +13,7 @@ export const getAccountWithTransactions = async (token, accountId) => {
 
 export const updateDefaultAccount = async (token, accountId) => {
     try {
-        const { data } = await api.put(`/accounts/${accountId}/default`, {}, {
+        const { data } = await api.patch(`/accounts/default`, { accountId }, {
             headers: { Authorization: `Bearer ${token}` }
         });
         return { success: true, data };
